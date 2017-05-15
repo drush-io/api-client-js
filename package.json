@@ -1,6 +1,6 @@
 {
   "name": "drush-io-client",
-  "version": "1.0.0",
+  "version": "1.0.0-alpha.1",
   "description": "JavaScript API client for drush.io.",
   "main": "dist/drush-io-client.js",
   "scripts": {
