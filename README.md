@@ -21,7 +21,7 @@ var DrushIOClient = require('@drush-io/api-client'),
 // Queue a run of the "backup-prod" job on the "my-corp" project.
 var runQueued = client.projects('my-corp').jobs('backup-prod').runs().create();
 
-// 
+// All actions return promises--you can react to them like this.
 runQueued.then(function onceQueued(run) {
   console.log(run);
 });
