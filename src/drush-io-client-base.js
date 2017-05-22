@@ -43,7 +43,7 @@ class DrushIOBase {
   }
 
   _getCsrfToken() {
-    return this.get(`${host}/rest/session/token`)
+    return popsicle.get(`${host}/rest/session/token`)
       .then(this._handleResponse)
       .catch(this._handleError);
   }
@@ -67,6 +67,11 @@ class DrushIOBase {
     // If a CSRF token was provided, add it.
     if (csrf && ['POST', 'PATCH', 'PUT', 'DELETE'].indexOf(method.toUpperCase()) >= 0) {
       requestObject.headers['X-CSRF-Token'] = csrf;
+    }
+
+    // If this is a token-based path, drop the authorization header (@todo better way to support this)
+    if (path.indexOf('/token') !== -1) {
+      delete requestObject.headers.Authorization;
     }
 
     return requestObject;

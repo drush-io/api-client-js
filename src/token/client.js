@@ -14,7 +14,7 @@ class DrushIOApiToken {
     return new Promise((resolve, reject) => {
       // First, retrieve a CSRF token.
       apiClient._getCsrfToken().then((response) => {
-        return apiClient.del(`/tokens/${this.identifier}`, null, response.body);
+        return apiClient.del(`/tokens/${this.identifier}`, response.body);
       }).then(() => {
         resolve();
       }).catch((err) => {
