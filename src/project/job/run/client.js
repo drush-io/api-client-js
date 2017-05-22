@@ -20,7 +20,7 @@ class DrushIORun {
    */
   get() {
     return new Promise((resolve, reject) => {
-      apiClient.get(`/projects/${this.project.identifier}/${this.job.identifier}/run/${this.identifier}`).then((response) => {
+      apiClient.get(`/projects/${this.project.identifier}/jobs/${this.job.identifier}/runs/${this.identifier}`).then((response) => {
         this.data = response.body;
         resolve(this)
       }).catch((err) => {
