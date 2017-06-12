@@ -14,7 +14,7 @@ class DrushIORuns {
 
   create(params = {}, wait = false) {
     return new Promise((resolve, reject) => {
-      apiClient.post(`/projects/${this.project.identifier}/jobs/${this.job.identifier}/runs`).then((response) => {
+      apiClient.post(`/projects/${this.project.identifier}/jobs/${this.job.identifier}/runs`, params).then((response) => {
         let intervalTimer;
 
         if (wait) {
