@@ -2,16 +2,12 @@
 
 const popsicle = require('popsicle');
 
-let token,
-    host,
-    baseUrl;
-
 class DrushIOBase {
 
   constructor(jwt, httpHost, basePath, version) {
-    token = jwt;
-    host = httpHost;
-    baseUrl = `${host}${basePath}${version}`;
+    this._token = jwt;
+    this._host = httpHost;
+    this._baseUrl = `${this._host}${basePath}${version}`;
   }
 
   get(path) {
@@ -43,7 +39,7 @@ class DrushIOBase {
   }
 
   _getCsrfToken() {
-    return popsicle.get(`${host}/rest/session/token`)
+    return popsicle.get(`${this._host}/rest/session/token`)
       .then(this._handleResponse)
       .catch(this._handleError);
   }
@@ -51,10 +47,10 @@ class DrushIOBase {
   _buildRequest(method, path, body, csrf) {
     let requestObject = {
       method: method.toUpperCase(),
-      url: baseUrl + path,
+      url: this._baseUrl + path,
       headers: {
         Accept: 'application/json',
-        Authorization: 'Bearer ' + token,
+        Authorization: 'Bearer ' + this._token,
         'Content-type': 'application/json'
       }
     };
