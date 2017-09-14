@@ -13,7 +13,7 @@ class DrushIORuns {
 
   list(params = {}) {
     return new Promise((resolve, reject) => {
-      apiClient.get(`/projects/${this.project.identifier}/runs`).then((response) => {
+      apiClient.get(`/projects/${this.project.identifier}/runs`, params).then((response) => {
         resolve(response.body.map((run) => {
           return new DrushIORun(apiClient, this.project, null, run.id, run);
         }));
