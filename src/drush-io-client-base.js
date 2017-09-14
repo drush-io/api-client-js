@@ -14,8 +14,8 @@ class DrushIOBase {
     baseUrl = `${host}${basePath}${version}`;
   }
 
-  get(path) {
-    return popsicle.request(this._buildRequest('GET', path))
+  get(path, params = {}) {
+    return popsicle.request(this._buildRequest('GET', path, params))
       .use(popsicle.plugins.parse('json'))
       .then(this._handleResponse)
       .catch(this._handleError);
@@ -62,6 +62,11 @@ class DrushIOBase {
     // If this request method supports a body, add it.
     if (body && ['POST', 'PATCH', 'PUT'].indexOf(method.toUpperCase()) >= 0) {
       requestObject.body = body;
+    }
+
+    // Use the supplied body as query parameters for GET requests.
+    if (body && method.toUpperCase() === 'GET') {
+      requestObject.query = body;
     }
 
     // If a CSRF token was provided, add it.
