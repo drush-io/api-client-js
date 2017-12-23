@@ -41,6 +41,19 @@ class DrushIOMember {
     });
   }
 
+  /**
+   * Re-sends the invitation for the given membership.
+   */
+  invite() {
+    return new Promise((resolve, reject) => {
+      apiClient.post(`/projects/${this.project.identifier}/members/${this.identifier}/invite`).then(() => {
+        resolve();
+      }).catch((err) => {
+        reject(err);
+      })
+    });
+  }
+
 }
 
 export default DrushIOMember;
