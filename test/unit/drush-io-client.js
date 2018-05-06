@@ -8,6 +8,8 @@ import CredentialClient from '../../src/credential/client';
 import CredentialsClient from '../../src/credentials/client';
 import ProjectClient from '../../src/project/client';
 import ProjectsClient from '../../src/projects/client';
+import SlackIntegrationClient from '../../src/integration/slack/client';
+import SlackIntegrationsClient from '../../src/integrations/slack/client';
 
 describe('drush.io', () => {
 
@@ -48,10 +50,29 @@ describe('drush.io', () => {
 
     it('returns project client (with identifier)', () => {
       let id = 'some-identifier',
-        fixture = client.projects(id);
+          fixture = client.projects(id);
 
       expect(fixture).to.be.instanceOf(ProjectClient);
       expect(fixture.identifier).to.equal(id);
+    });
+
+    it('returns slack integration client', () => {
+      expect(client.integrations('slack')).to.be.instanceOf(SlackIntegrationsClient);
+    });
+
+    it('returns slack integration client (with identifier)', () => {
+      let id = 1,
+          fixture = client.integrations('slack', id);
+
+      expect(fixture).to.be.instanceOf(SlackIntegrationClient);
+      expect(fixture.identifier).to.equal(id);
+    });
+
+    it('throws an error for unknown integrations', () => {
+      let integration = 'fakeService',
+          fixture = client.integrations.bind(null, integration);
+
+      expect(fixture).to.throw(Error, `Unknown integration ${integration}`);
     });
 
   });
