@@ -8,6 +8,8 @@ import CredentialClient from './credential/client';
 import CredentialsClient from './credentials/client';
 import ProjectClient from './project/client';
 import ProjectsClient from './projects/client';
+import SlackIntegrationClient from './integration/slack/client';
+import SlackIntegrationsClient from './integrations/slack/client';
 
 class DrushIO extends ClientBase {
 
@@ -51,6 +53,26 @@ class DrushIO extends ClientBase {
     }
     else {
       return new ApiTokensClient(this);
+    }
+  }
+
+  /**
+   * Returns a drush.io integration API client.
+   * @param {String} type
+   * @param {*} identifier
+   * @returns {DrushIOSlackIntegration|DrushIOSlackIntegrations}
+   */
+  integrations(type, identifier) {
+    if (type === 'slack') {
+      if (identifier) {
+        return new SlackIntegrationClient(this, identifier);
+      }
+      else {
+        return new SlackIntegrationsClient(this);
+      }
+    }
+    else {
+      throw new Error(`Unknown integration ${type}`)
     }
   }
 
